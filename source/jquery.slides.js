@@ -8,6 +8,7 @@
       width: 940,
       height: 528,
       start: 1,
+      scale: true,
       navigation: {
         active: true,
         effect: "slide"
@@ -82,11 +83,13 @@
         position: "absolute",
         top: 0,
         left: 0,
-        width: "100%",
         zIndex: 0,
         display: "none",
         webkitBackfaceVisibility: "hidden"
       });
+      if (this.options.scale) {
+        $(".slidesjs-control", $element).children().addClass("slidesjs-slide").css({width: "100%"});
+      }
       $.each($(".slidesjs-control", $element).children(), function(i) {
         var $slide;
         $slide = $(this);
