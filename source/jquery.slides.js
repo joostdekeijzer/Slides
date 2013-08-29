@@ -60,7 +60,6 @@
       $element = $(this.element);
       this.data = $.data(this);
       $.data(this, "animating", false);
-      $.data(this, "total", $element.children().not(".slidesjs-navigation", $element).length);
       $.data(this, "current", this.options.start - 1);
       $.data(this, "vendorPrefix", this._getVendorPrefix());
       if (typeof TouchEvent !== "undefined") {
@@ -70,11 +69,18 @@
       $element.css({
         overflow: "hidden"
       });
-      $element.slidesContainer = $element.children().not(".slidesjs-navigation", $element).wrapAll("<div class='slidesjs-container'>", $element).parent().css({
-        overflow: "hidden",
-        position: "relative"
-      });
-      $(".slidesjs-container", $element).wrapInner("<div class='slidesjs-control'>", $element).children();
+
+      $element.slidesContainer = $('.slidesjs-container', $element);
+      if ($element.slidesContainer.length == 0) {
+        $element.slidesContainer = $element.children().not(".slidesjs-navigation", $element).wrapAll("<div class='slidesjs-container'>", $element).parent();
+      }
+      $element.slidesContainer.css({
+          overflow: "hidden",
+          position: "relative"
+        });
+      $.data(this, "total", $('.slidesjs-container', $element).children().length);
+
+      $('.slidesjs-container', $element).wrapInner("<div class='slidesjs-control'>", $element).children();
       $(".slidesjs-control", $element).css({
         position: "relative",
         left: 0
@@ -116,13 +122,18 @@
           zIndex: 10
         });
       });
-      if (this.options.navigation.active) {
+
+      prevButton = $('.slidesjs-previous', $element);
+      if (this.options.navigation.active && prevButton.length == 0) {
         prevButton = $("<a>", {
           "class": "slidesjs-previous slidesjs-navigation",
           href: "#",
           title: "Previous",
           text: "Previous"
         }).appendTo($element);
+      }
+      nextButton = $('.slidesjs-next', $element);
+      if (this.options.navigation.active && nextButton.length == 0) {
         nextButton = $("<a>", {
           "class": "slidesjs-next slidesjs-navigation",
           href: "#",
@@ -130,47 +141,56 @@
           text: "Next"
         }).appendTo($element);
       }
-      $(".slidesjs-next", $element).click(function(e) {
-        e.preventDefault();
-        _this.stop(true);
-        return _this.next(_this.options.navigation.effect);
-      });
       $(".slidesjs-previous", $element).click(function(e) {
         e.preventDefault();
         _this.stop(true);
         return _this.previous(_this.options.navigation.effect);
       });
-      if (this.options.play.active) {
+      $(".slidesjs-next", $element).click(function(e) {
+        e.preventDefault();
+        _this.stop(true);
+        return _this.next(_this.options.navigation.effect);
+      });
+
+      playButton = $('.slidesjs-play', $element);
+      if (this.options.play.active && playButton.length == 0) {
         playButton = $("<a>", {
           "class": "slidesjs-play slidesjs-navigation",
           href: "#",
           title: "Play",
           text: "Play"
         }).appendTo($element);
+      }
+      stopButton = $('.slidesjs-stop', $element);
+      if (this.options.play.active && stopButton.length == 0) {
         stopButton = $("<a>", {
           "class": "slidesjs-stop slidesjs-navigation",
           href: "#",
           title: "Stop",
           text: "Stop"
         }).appendTo($element);
-        playButton.click(function(e) {
-          e.preventDefault();
-          return _this.play(true);
-        });
-        stopButton.click(function(e) {
-          e.preventDefault();
-          return _this.stop(true);
-        });
-        if (this.options.play.swap) {
-          stopButton.css({
-            display: "none"
-          });
-        }
       }
-      if (this.options.pagination.active) {
+      playButton.click(function(e) {
+        e.preventDefault();
+        return _this.play(true);
+      });
+      stopButton.click(function(e) {
+        e.preventDefault();
+        return _this.stop(true);
+      });
+      if (this.options.play.swap) {
+        stopButton.css({
+          display: "none"
+        });
+      }
+
+      pagination = $('.slidesjs-pagination', $element);
+      if (this.options.pagination.active && pagination.length == 0) {
         pagination = $("<ul>", {
           "class": "slidesjs-pagination"
         }).appendTo($element);
+      }
+      if (pagination.length > 0) {
         $.each(new Array(this.data.total), function(i) {
           var paginationItem, paginationLink;
           paginationItem = $("<li>", {
