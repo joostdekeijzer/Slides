@@ -1,4 +1,6 @@
-h1. SlidesJS 3.0
+h1. SlidesJS 3.1
+
+*decaf version*
 
 SlidesJS is a responsive slideshow plug-in for jQuery (1.7.1+) with features like touch and CSS3 transitions.
 
@@ -8,9 +10,18 @@ Support forum "http://groups.google.com/group/slidesjs":http://groups.google.com
 
 (c) 2013 by Nathan Searles
 
+h2. Development
+
+I don't use Coffee script, so for the enhancements the javascript source was changed directly.
+
 h2. Documentation
 
 SlidesJS version 3.0 documentation is available at "http://slidesjs.com/":http://slidesjs.com/
+
+h3. Enhancements
+
+* Added @scale@ (bool) setting, default @true@. Setting it to @false@ will prevent adding @width: 100%@ css to all images.
+* The script now checks if the various navigation elements don't already exist on the page. This allows for custom postioning.
 
 h2. License
 
@@ -28,4 +39,5 @@ limitations under the License.
 
 h2. Changelog
 
+* 3.1 Decaf version with enhancements
 * 3.0 Initial release
