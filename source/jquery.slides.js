@@ -1,3 +1,11 @@
+/*
+  SlidesJS-decaf 3.1
+  Based on 3.0.4 http://slidesjs.com
+  (c) 2013 by Nathan Searles http://nathansearles.com
+  (c) 2013 by Joost de Keijzer http://dekeijzer.org
+  Updated: 20130830
+  Apache License: http://www.apache.org/licenses/LICENSE-2.0
+*/
 (function() {
 
   (function($, window, document) {
